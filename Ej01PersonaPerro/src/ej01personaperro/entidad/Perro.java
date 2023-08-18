@@ -16,7 +16,7 @@ public class Perro {
     private RazasPerros raza;
     private int edad;
     private String tamanio;
-    private boolean adoptado;
+
 
     public Perro() {
     }
@@ -60,13 +60,6 @@ public class Perro {
         this.tamanio = tamanio;
     }
 
-    public boolean isAdoptado() {
-        return adoptado;
-    }
-
-    public void setAdoptado(boolean adoptado) {
-        this.adoptado = adoptado;
-    }
 
     
     @Override

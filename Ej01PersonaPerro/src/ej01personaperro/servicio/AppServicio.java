@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package ej01personaperro.servicio;
 
 import ej01personaperro.entidad.Perro;
@@ -14,97 +10,97 @@ import java.util.Scanner;
 
 /**
  *
- * @author ardil
+ * @author lau
  */
 public class AppServicio {
+
     private List<Persona> personas = new ArrayList<>();
-    private List<Perro> perros = new ArrayList<>();
+    private List<Perro> perrosDisponibles = new ArrayList<>();
+    private List<Perro> perrosAdoptados = new ArrayList<>();
     Scanner scan = new Scanner(System.in).useDelimiter("\n");
-    
-    public void ejecutar(){
+
+    public void ejecutar() {
         cargarPerros();
         cargarPersonas();
         adoptar();
         mostrarPersonasFelices();
     }
-    
-    public void cargarPerros(){
-        perros.add(new Perro("Tommy",RazasPerros.BEAGLE,1,"Mediano"));
-        perros.add(new Perro("Croissant",RazasPerros.COCKER,1,"Mediano"));
-        perros.add(new Perro("Tequila",RazasPerros.SHIH_TZU,1,"Pequeño"));
-        perros.add(new Perro("Fercho",RazasPerros.SCHNAUZER,1,"Grande"));
+
+    public void cargarPerros() {
+        perrosDisponibles.add(new Perro("Tommy", RazasPerros.BEAGLE, 1, "Mediano"));
+        perrosDisponibles.add(new Perro("Croissant", RazasPerros.COCKER, 1, "Mediano"));
+        perrosDisponibles.add(new Perro("Tequila", RazasPerros.SHIH_TZU, 1, "Pequeño"));
+        perrosDisponibles.add(new Perro("Fercho", RazasPerros.SCHNAUZER, 1, "Grande"));
     }
-    public void cargarPersonas(){
-        personas.add(new Persona("Laura","Ardila",24,"1234"));
-        personas.add(new Persona("Andres","Carnederes",30,"4567"));
-        personas.add(new Persona("Lola","Sanchez",20,"7894"));
-        personas.add(new Persona("Pepito","Perez",50,"5612"));
+
+    public void cargarPersonas() {
+        personas.add(new Persona("Laura", "Ardila", 24, "1234"));
+        personas.add(new Persona("Andres", "Carnederes", 30, "4567"));
+        personas.add(new Persona("Lola", "Sanchez", 20, "7894"));
+        personas.add(new Persona("Pepito", "Perez", 50, "5612"));
     }
-    public void adoptar(){
+
+    public void adoptar() {
         String opc;
-        for (Persona persona : personas) {
-            System.out.println("Hola " + persona.getNombre());
-            verDisponibles();
-            asignarPerro(persona);     
-            
+        for (int i = 0; i < personas.size(); i++) {
+            System.out.println("Hola " + personas.get(i).getNombre());
+            if(i<personas.size()-1){
+                verDisponibles();
+                asignarPerro(personas.get(i));
+            }else if(i==personas.size()-1){
+                //Condicional que le asigna a la ultima persona el ultimo perro
+                //siempre y cuando haya la misma cantidad de perros y de personas
+                System.out.println("Felicidades, eres el nuevo dueño de: " + perrosDisponibles.get(0).getNombre());
+                personas.get(i).setPerro(perrosDisponibles.get(0));
+            }         
+        }
+        
+    }
+
+    public void verDisponibles() {
+        System.out.println("Estos son los perritos que buscan hogar:");
+        for (Perro perro : perrosDisponibles) {
+            System.out.println(perro.toString());
+
         }
     }
-    public void verDisponibles(){
-        for (Perro perro : perros) {
-                if(!perro.isAdoptado()){
-                    System.out.println(perro.toString());
-                }                
-            }
-    }
-    public void asignarPerro(Persona persona){
-        String opc;
-        boolean aux=false;
-        int contador=4;
-        
+
+    public void asignarPerro(Persona persona) {
+        boolean encontrado = false;
+        String perroUsuario;
         do {
-            if (contador != 1) {
-                System.out.println("¿Qué perro quieres adoptar?");
-                opc = scan.nextLine();
-
-                for (Perro perro : perros) {
-                    if (contador != 1) {
-                        if (perro.getNombre().equals(opc)) {
-                            if (!perro.isAdoptado()) {
-                                persona.setPerro(perro);
-                                perro.setAdoptado(true);
-                                aux = true;
-                                contador--;
-                                break;
-
-                            }
-                        }
-                    } else {
-                        break;
-                    }
-
-                }
-                if (!aux) {
-                    System.out.println("Ese perro no se encuentra en la lista");
-                }
-            }else{
-                for (Perro perro : perros) {
-                    if(!perro.isAdoptado()){
-                        System.out.println("Eres el afortunado nuevo dueño de: " + perro.getNombre());
-                        persona.setPerro(perro);
-                        perro.setAdoptado(true);
-                        break;
-                    }
-                }
-                
+            System.out.println("¿Qué perro desea adoptar?");
+            perroUsuario = scan.next();
+            for (Perro perro : perrosDisponibles) {
+                if (perro.getNombre().equals(perroUsuario)) {
+                    encontrado = true;
+                    persona.setPerro(perro);
+                    perrosAdoptados.add(perro);
+                    System.out.println("Felicidades, su adopción fue exitosa");
+                    System.out.println("-------------------------------------");
+                    perrosDisponibles.remove(perro);
+                    break;
+                }          
             }
-
-
-        }while(!aux);      
+            if(!encontrado){
+                    System.out.println("Ese nombre no se encuentra en la lista, intente nuevamente");
+                }
+        } while (!encontrado);
+    }
     
-    }
     public void mostrarPersonasFelices(){
-        System.out.println(personas.toString());
+        System.out.println("----------------");
+        personas.forEach((persona) -> System.out.println(persona));
+        
     }
+    
+    
+
 }
+
+
+
+
+
 
 
