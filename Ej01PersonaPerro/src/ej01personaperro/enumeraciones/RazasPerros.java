@@ -10,7 +10,7 @@ package ej01personaperro.enumeraciones;
  * @author ardil
  */
 public enum RazasPerros {
-    BEAGLE("Beagle"), SCHNAUZER("Schnauzer"), CHITZU("Chitzu");
+    BEAGLE("Beagle"), SCHNAUZER("Schnauzer"), SHIH_TZU("Chitzu"),SAMOYEDO("Samoyedo"),COCKER("Cocker)");
     
     private String formato;
 

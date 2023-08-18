@@ -33,9 +33,12 @@ public class Juego {
         while(juegoContinua){
             for(Jugador jugadorEnTurno: jugadores){
                 System.out.println("Está jugando el " + jugadorEnTurno.getNombre());
+                esperar(1);
                 jugadorEnTurno.disparo(revolver);
-                System.out.println("Donde estamos "+revolver.toString());
+                esperar(1);
+                //System.out.println("Donde estamos "+revolver.toString());
                 System.out.println("----------");
+                esperar(1);
                 if(jugadorEnTurno.isMojado()){
                     juegoContinua=false;
                     break;
@@ -44,5 +47,13 @@ public class Juego {
             }
         }
 
+    }
+    public void esperar(int n){
+        //Ponemos a "Dormir" el programa durante los ms que queremos
+        try {
+            Thread.sleep(n * 1000);
+        } catch (InterruptedException e) {
+            System.out.println(e);
+        }
     }
 }

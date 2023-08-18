@@ -20,12 +20,12 @@ public class Persona {
     public Persona() {
     }
 
-    public Persona(String nombre, String apellido, int edad, String documento, Perro perro) {
+    public Persona(String nombre, String apellido, int edad, String documento) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.edad = edad;
         this.documento = documento;
-        this.perro = perro;
+        this.perro = null;
     }
 
 
